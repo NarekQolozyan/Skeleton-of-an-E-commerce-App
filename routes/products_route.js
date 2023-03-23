@@ -1,4 +1,5 @@
-const action_products = require('../models/products_schema')
+const action_products = require('../controllers/products_controlers')
+const middleware = require('../middlewares/adminMiddleware')
 
     exports.productsRoutes=(app)=>{
         
@@ -8,8 +9,8 @@ const action_products = require('../models/products_schema')
         
             app.post("/product_add",action_products.create_product)
             
-            app.patch("/update_user/:id",action_products.update_product)
+            app.patch("/update_product/:id",middleware.authenticateTokenAdmin,action_products.update_product)
         
-            app.delete("/delete/:id",action_products.delete_product)
+            app.delete("/delete_product/:id",middleware.authenticateTokenAdmin,action_products.delete_product)
         
     }
